@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emissions Intelligence Platform</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #0a0a0a;
+            --bg-surface: #111111;
+            --bg-surface-hover: #171717;
+            --text-primary: #ededed;
+            --text-secondary: #a1a1aa;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --brand-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Animated Background Mesh */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                radial-gradient(at 40% 20%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(129, 140, 248, 0.08) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(56, 189, 248, 0.05) 0px, transparent 50%);
+            animation: breathe 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeDown 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-mark {
+            width: 24px;
+            height: 24px;
+            background: var(--brand-gradient);
+            border-radius: 6px;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 1rem 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .pill span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #38bdf8;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 10px #38bdf8;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            animation: trackingInExpand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.2s both;
+        }
+
+        h1 .highlight {
+            background: linear-gradient(270deg, #38bdf8, #818cf8, #34d399, #38bdf8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShimmer 4s ease infinite;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin-bottom: 3rem;
+            animation: textFocusIn 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.3s both;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            background: #ffffff;
+            color: #000000;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 4rem 5% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            animation: trackingInExpand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.6s both;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .card:nth-child(1) { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+        .card:nth-child(2) { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards; }
+        .card:nth-child(3) { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, -20%), var(--accent-glow), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            background: var(--bg-surface-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: #38bdf8;
+        }
+
+        .card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Simulator UI */
+        .simulator-section {
+            padding: 4rem 5% 8rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        .simulator-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-element {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.9rem 1rem;
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            appearance: none;
+        }
+
+
+        .calc-field {
+            background: rgba(15, 23, 42, 0.8) !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+            color: #38bdf8 !important;
+            cursor: not-allowed;
+            font-weight: 600;
+        }
+        select.form-element {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2rem;
+            padding-right: 3rem;
+        }
+
+        .form-element:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .form-element option {
+            background: #1e293b;
+        }
+
+        .btn-predict {
+            display: inline-flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            background: var(--brand-gradient);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-predict:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            display: none;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-box {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--brand-gradient);
+            opacity: 0.5;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .metric-value {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 0.2rem;
+            line-height: 1;
+        }
+
+        .metric-unit {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .value-co2 { color: #f87171; text-shadow: 0 0 30px rgba(248, 113, 113, 0.2); }
+        .value-veei { color: #34d399; text-shadow: 0 0 30px rgba(52, 211, 153, 0.2); }
+
+        .interp-box {
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+            background: rgba(255,255,255,0.02);
+            text-align: left;
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .interp-excellent { border-left-color: #34d399; background: rgba(52, 211, 153, 0.05); }
+        .interp-average { border-left-color: #fbbf24; background: rgba(251, 191, 36, 0.05); }
+        .interp-poor { border-left-color: #f87171; background: rgba(248, 113, 113, 0.05); }
+
+        /* Loader */
+        .loader {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-left: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes textFocusIn {
+            0% { filter: blur(12px); opacity: 0; transform: translateY(10px); }
+            100% { filter: blur(0px); opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes trackingInExpand {
+            0% { letter-spacing: -0.5em; opacity: 0; }
+            40% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes gradientShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+            h1 {
+                font-size: 3rem;
+            }
+            .simulator-card {
+                padding: 1.5rem;
+            }
+            .metric-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+        <style id="wow-animations">
+        /* WOW Factor Entrance Animations */
+        @keyframes slideRightSkew {
+            0% { opacity: 0; transform: translateX(-150px) skewX(20deg); }
+            100% { opacity: 1; transform: translateX(0) skewX(0deg); }
+        }
+        @keyframes slideUpBlurExtreme {
+            0% { opacity: 0; transform: translateY(60px); filter: blur(20px); letter-spacing: -3px; }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); letter-spacing: normal; }
+        }
+        @keyframes popInBouncy {
+            0% { opacity: 0; transform: scale(0.5) translateY(50px); }
+            50% { opacity: 1; transform: scale(1.05) translateY(-10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes perspectiveEnterUI {
+            0% { opacity: 0; transform: perspective(1500px) rotateX(15deg) translateY(80px) scale(0.9); }
+            100% { opacity: 1; transform: perspective(1500px) rotateX(0deg) translateY(0) scale(1); }
+        }
+
+        /* Initial transparent state for scroll animations */
+        .scroll-pill, .scroll-hero-title, .scroll-hero-desc, .scroll-cta, .scroll-sim, .scroll-header, .scroll-card, .hero-car-graphic {
+            opacity: 0;
+            will-change: transform, opacity, filter;
+        }
+
+        /* Applying Sequence Overrides on Scroll */
+        .scroll-pill.in-view { animation: slideRightSkew 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+        .hero-car-graphic.in-view { animation: slideRightSkew 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards !important; }
+        .scroll-hero-title.in-view { animation: slideRightSkew 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important; }
+        .scroll-hero-desc.in-view { animation: slideUpBlurExtreme 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards !important; }
+        .scroll-cta.in-view { animation: popInBouncy 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s forwards !important; }
+        
+        .scroll-sim.in-view {
+            animation: perspectiveEnterUI 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+        }
+
+        .scroll-header.in-view { animation: slideRightSkew 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+        
+        .scroll-card.in-view { 
+            animation: popInBouncy 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) var(--delay, 0s) forwards !important; 
+        }
+        
+        .simulator-card {
+            box-shadow: 0 30px 60px -12px rgba(56, 189, 248, 0.15) !important;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
+        }
+        .simulator-card:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            box-shadow: 0 45px 80px -15px rgba(56, 189, 248, 0.4) !important;
+        }
+
+        .hero-car-graphic {
+            width: 100%;
+            max-width: 500px;
+            margin: 1rem auto;
+        }
+        .car-glow { filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4)); }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-mark"></div>
+            Intelligence
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="pill scroll-pill scroll-anim">
+            <span></span> Live Processing Active
+        </div>
+        <svg class="hero-car-graphic scroll-anim in-view" viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
+            <g class="car-glow" fill="none" stroke="url(#car-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Sleek Car Silhouette -->
+                <path d="M150,170 L180,110 Q210,60 280,50 L380,45 Q480,45 520,70 L580,120 Q650,130 680,150 L690,180 Q690,210 650,210 L600,210 M520,210 L280,210 M200,210 L120,210 Q100,210 100,190 L110,150 Z"/>
+                <circle cx="240" cy="210" r="40" stroke-width="6"/>
+                <circle cx="560" cy="210" r="40" stroke-width="6"/>
+                <circle cx="240" cy="210" r="15"/>
+                <circle cx="560" cy="210" r="15"/>
+                <path d="M50,150 L80,150 M20,170 L60,170 M40,130 L90,130" stroke="#38bdf8" stroke-width="3" opacity="0.6"/>
+            </g>
+            <defs>
+                <linearGradient id="car-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#38bdf8" />
+                    <stop offset="100%" stop-color="#818cf8" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <h1 class="scroll-hero-title scroll-anim">Vehicle Emissions <br><span class="highlight">Dashboard</span></h1>
+        <p class="hero-desc scroll-hero-desc scroll-anim">
+            An AI-powered web platform designed to estimate vehicle CO₂ emissions and fuel efficiency. The system uses advanced machine learning models to process vehicle data and generate real-time insights. It supports better decision-making for sustainable transportation.
+        </p>
+        <div class="cta-group scroll-cta scroll-anim">
+            <a href="#simulator" class="btn-primary">Open Predictor</a>
+            <a href="#features" class="btn-secondary">View Features</a>
+        </div>
+    </section>
+
+    <section id="simulator" class="simulator-section scroll-sim scroll-anim">
+        <div class="simulator-card">
+            <h2 class="section-header" style="margin-bottom: 2rem;">VEEI Prediction Engine</h2>
+            
+            <form id="prediction-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Manufacturer / Make</label>
+                        <select id="make" class="form-element" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Class</label>
+                        <select id="vehicle_class" class="form-element" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Transmission</label>
+                        <select id="transmission" class="form-element" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fuel Type</label>
+                        <select id="fuel_type" class="form-element" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Engine Size (L)</label>
+                        <input type="number" step="0.1" id="engine_size" class="form-element" value="2.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cylinders</label>
+                        <input type="number" id="cylinders" class="form-element" value="4" required>
+                    </div>
+                    <div class="form-group">
+                        <label>City Fuel (L/100 km)</label>
+                        <input type="number" step="0.1" id="fuel_city" class="form-element" value="10.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hwy Fuel (L/100 km)</label>
+                        <input type="number" step="0.1" id="fuel_hwy" class="form-element" value="7.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Comb Fuel (L/100 km)</label>
+                        <input type="number" step="0.1" id="fuel_comb" class="form-element calc-field" readonly value="8.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Comb Fuel (mpg)</label>
+                        <input type="number" id="fuel_mpg" class="form-element calc-field" readonly value="30" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-predict" id="submit-btn">
+                    Execute Analytics <div class="loader" id="loader"></div>
+                </button>
+            </form>
+
+            <div class="results-panel" id="results-panel">
+                <div class="results-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Predicted Emission Profile</div>
+                        <div class="metric-value value-co2"><span id="res-co2">--</span></div>
+                        <div class="metric-unit">Grams / Kilometer</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Efficiency Index Score</div>
+                        <div class="metric-value value-veei"><span id="res-veei">--</span></div>
+                        <div class="metric-unit">Normalized (0-100)</div>
+                    </div>
+                </div>
+                <div class="interp-box" id="res-interp">
+                    --
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <h2 class="section-header scroll-header scroll-anim">Core Features</h2>
+        <div class="grid">
+            <div class="card scroll-card scroll-anim" style="--delay: 0.1s">
+                <div class="card-icon">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                    </svg>
+                </div>
+                <h3>Data Processing</h3>
+                <p>Cleans and structures raw vehicle data. Organizes engine sizes, fuel consumption, and transmission types into a machine-learning-ready format.</p>
+            </div>
+            
+            <div class="card scroll-card scroll-anim" style="--delay: 0.3s">
+                <div class="card-icon">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                    </svg>
+                </div>
+                <h3>CO2 Prediction</h3>
+                <p>Uses an optimized XGBoost algorithm to estimate the exact grams of CO2 a vehicle will emit per kilometer based on your form inputs.</p>
+            </div>
+
+            <div class="card scroll-card scroll-anim" style="--delay: 0.5s">
+                <div class="card-icon">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                </div>
+                <h3>Efficiency Scoring (VEEI)</h3>
+                <p>Calculates the custom Vehicle Emission Efficiency Index. This score from 0 to 100 tells you how efficient a car is for its specific size and class.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 Automotive Emissions Analytics Hub. Built for enterprise efficiency modeling.
+    </footer>
+
+    <script>
+        
+        // Scroll Intersection Observer for repeatable animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Force reflow to restart animation
+                    entry.target.classList.remove('in-view');
+                    void entry.target.offsetWidth;
+                    entry.target.classList.add('in-view');
+                } else {
+                    entry.target.classList.remove('in-view');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Apply immediately
+        document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
+
+        // Mouse glow effect
+        document.querySelectorAll('.card, .simulator-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Initialize Form Data
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('/api/options');
+                if (!res.ok) throw new Error("HTTP Status " + res.status);
+                const data = await res.json();
+                
+                const populate = (id, arr) => {
+                    const el = document.getElementById(id);
+                    arr.forEach(val => {
+                        const opt = document.createElement('option');
+                        opt.value = val;
+                        opt.textContent = val;
+                        el.appendChild(opt);
+                    });
+                };
+                
+                if (data.makes) {
+                    populate('make', data.makes);
+                    populate('vehicle_class', data.v_classes);
+                    populate('transmission', data.transmissions);
+                    populate('fuel_type', data.fuel_types);
+                    
+                    // Set ACURA as default make if available, just to prefill
+                    const acuraIndex = data.makes.findIndex(m => m === 'ACURA');
+                    if(acuraIndex > -1) document.getElementById('make').selectedIndex = acuraIndex;
+                }
+            } catch (e) {
+                console.error("Failed to load options from backend", e);
+            }
+        });
+
+        // Handle EV / Hybrid default 0s UX Rule
+        document.getElementById('fuel_type').addEventListener('change', (e) => {
+            const val = e.target.value;
+            if (val === 'Electric' || val === 'Hybrid') {
+                document.getElementById('engine_size').value = 0.0;
+                document.getElementById('cylinders').value = 0;
+                document.getElementById('fuel_city').value = 0.0;
+                document.getElementById('fuel_hwy').value = 0.0;
+                document.getElementById('fuel_comb').value = 0.0;
+                document.getElementById('fuel_mpg').value = 0;
+            } else {
+                document.getElementById('engine_size').value = 2.0;
+                document.getElementById('cylinders').value = 4;
+                document.getElementById('fuel_city').value = 10.0;
+                document.getElementById('fuel_hwy').value = 7.0;
+                document.getElementById('fuel_comb').value = 8.5;
+                document.getElementById('fuel_mpg').value = 30;
+            }
+        });
+
+
+        // Auto-calculate Combined Fuel and MPG
+        const cityInput = document.getElementById('fuel_city');
+        const hwyInput = document.getElementById('fuel_hwy');
+        const combInput = document.getElementById('fuel_comb');
+        const mpgInput = document.getElementById('fuel_mpg');
+
+        function autoCalculateComb() {
+            const fuelType = document.getElementById('fuel_type').value;
+            if (fuelType === 'Electric' || fuelType === 'Hybrid') return;
+
+            const city = parseFloat(cityInput.value) || 0;
+            const hwy = parseFloat(hwyInput.value) || 0;
+            
+            if (city > 0 && hwy > 0) {
+                // Canonical Canadian Vehicle Formula: 55% City / 45% Highway
+                const comb = (0.55 * city) + (0.45 * hwy);
+                combInput.value = comb.toFixed(1);
+                
+                // Canada Imperial MPG formula: 282.48 / L/100km
+                const mpg = Math.round(282.48 / comb);
+                mpgInput.value = mpg;
+            }
+        }
+
+        cityInput.addEventListener('input', autoCalculateComb);
+        hwyInput.addEventListener('input', autoCalculateComb);
+
+        // Smoothly animate numbers
+
+        function animateValue(obj, start, end, duration, isFloat=false) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // Ease out cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = progress === 1 ? end : (start + (end - start) * easeOut);
+                
+                obj.innerHTML = (isFloat ? current.toFixed(1) : Math.floor(current));
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Form Submit
+        document.getElementById('prediction-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submit-btn');
+            const loader = document.getElementById('loader');
+            const panel = document.getElementById('results-panel');
+            
+            btn.disabled = true;
+            loader.style.display = 'inline-block';
+            
+            const payload = {
+                make: document.getElementById('make').value,
+                vehicle_class: document.getElementById('vehicle_class').value,
+                transmission: document.getElementById('transmission').value,
+                fuel_type: document.getElementById('fuel_type').value,
+                engine_size: parseFloat(document.getElementById('engine_size').value),
+                cylinders: parseInt(document.getElementById('cylinders').value),
+                fuel_city: parseFloat(document.getElementById('fuel_city').value),
+                fuel_hwy: parseFloat(document.getElementById('fuel_hwy').value),
+                fuel_comb: parseFloat(document.getElementById('fuel_comb').value),
+                fuel_mpg: parseInt(document.getElementById('fuel_mpg').value)
+            };
+
+            try {
+                const res = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await res.json();
+                
+                if (data.error) {
+                    alert("Error processing analytics: " + data.error);
+                } else {
+                    panel.style.display = 'block';
+                    
+                    // Animate the metrics
+                    animateValue(document.getElementById('res-co2'), 0, data.prediction, 1500, true);
+                    animateValue(document.getElementById('res-veei'), 0, data.veei, 1500, true);
+                    
+                    const interpBox = document.getElementById('res-interp');
+                    interpBox.innerHTML = `<strong>${data.interpretation.split(':')[0]}:</strong>${data.interpretation.split(':')[1]}`;
+                    interpBox.className = 'interp-box interp-' + data.status;
+                }
+            } catch (err) {
+                alert("Failed to reach the prediction engine. Please check if the backend server is running.");
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

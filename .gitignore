@@ -1,0 +1,17 @@
+# Virtual Environments (NEVER UPLOAD THESE)
+venv/
+env/
+.env
+
+# Python Cache Files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
